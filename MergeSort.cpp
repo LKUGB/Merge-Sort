@@ -26,8 +26,10 @@ int main() {
 
     mergeSort(v, t, 0, v.size() - 1);
         cout << "The empty list is sorted:" << endl;
-        for (int i = 0; i < v.size(); i++) {
-            cout << v.at(i) << '\t';
+    cout << v.at(0) << '\t';
+    for (int i = 1; i < v.size(); i++) {
+        assert(v.at(i-1) <= v.at(i));
+        cout << v.at(i) << '\t';
         }
         cout << endl;
         v.clear(); //clear the elements in the vector to proceed to the next unit test
@@ -36,7 +38,9 @@ int main() {
     v = {1,2,5,6,9}; //assign the vector with values that are already sorted
     mergeSort(v, t, 0, v.size() - 1);
     cout << "The list with correct order is sorted:" << endl;
-    for (int i = 0; i < v.size(); i++) {
+    cout << v.at(0) << '\t';
+    for (int i = 1; i < v.size(); i++) {
+        assert(v.at(i-1) <= v.at(i));
         cout << v.at(i) << '\t';
     }
     cout << endl;
@@ -46,7 +50,9 @@ int main() {
     v = {81,64,25,24,2,1};
     mergeSort(v, t, 0, v.size() - 1);
     cout << "The list with reverse order is sorted:" << endl;
-    for (int i = 0; i < v.size(); i++) {
+    cout << v.at(0) << '\t';
+    for (int i = 1; i < v.size(); i++) {
+        assert(v.at(i-1) <= v.at(i));
         cout << v.at(i) << '\t';
     }
     cout << endl;
@@ -56,11 +62,25 @@ int main() {
     v = {6,6,6,6,6,6,6};
     mergeSort(v, t, 0, v.size() - 1);
     cout << "The list with same number on each index is sorted:" << endl;
-    for (int i = 0; i < v.size(); i++) {
+    cout << v.at(0) << '\t';
+    for (int i = 1; i < v.size(); i++) {
+        assert(v.at(i-1) <= v.at(i));
         cout << v.at(i) << '\t';
     }
     cout << endl;
     v.clear();
+
+    //unit test for MergeSortedList
+    //create one vector that is sorted from index 0 - mid and sorted from index mid + 1 to right
+    vector<int> halfSorted = {1, 5, 6 , 8, 2, 5, 13, 15};
+    vector<int> tmpVector(8);
+    mergeSortedLists(halfSorted, tmpVector, 0, 3, 7);
+
+    for(int i = 1; i < halfSorted.size(); i++) { // test whether the vector is sorted
+        assert(halfSorted.at(i - 1) <= halfSorted.at(i));
+    }
+
+
     //unit test finished ******************************************************************************************************************
 
     //resize the vector with the length inputted by the user at the beginning to sort the random vector
@@ -91,6 +111,7 @@ int main() {
 
     return 0;
 }
+
 
 void mergeSortedLists(vector<int>& a, vector<int>& tmp, int left, int mid, int right) {
 
